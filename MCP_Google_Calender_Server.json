@@ -1,0 +1,196 @@
+{
+  "name": "MCP_Google_Calender_Server",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "34c4dbd4-04ca-429a-a447-9de5c62c8819"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "67edc9b5-5a79-4b1b-a29b-fb41cd99599a",
+      "name": "MCP Server Trigger",
+      "webhookId": "34c4dbd4-04ca-429a-a447-9de5c62c8819"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "subrata.aiworld@gmail.com",
+          "mode": "list",
+          "cachedResultName": "subrata.aiworld@gmail.com"
+        },
+        "start": "={{ $fromAI('Start', `Event start date and time in ISO format`, 'string') }}",
+        "end": "={{ $fromAI('End', `Event end date and time in ISO format`, 'string') }}",
+        "additionalFields": {
+          "description": "={{ $fromAI('description', 'Event description', 'string') }}",
+          "summary": "={{ $fromAI('summary', 'Event title/summary', 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        112,
+        224
+      ],
+      "id": "7a165bee-9735-42d6-9c2c-4b17f7810a07",
+      "name": "Google Calendar1",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CT8OPAO29NgKiy8H",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "subrata.aiworld@gmail.com",
+          "mode": "list",
+          "cachedResultName": "subrata.aiworld@gmail.com"
+        },
+        "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}",
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        224
+      ],
+      "id": "df88424f-2ef4-4368-b034-696a3a5a6d9a",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CT8OPAO29NgKiy8H",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "subrata.aiworld@gmail.com",
+          "mode": "list",
+          "cachedResultName": "subrata.aiworld@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "description": "={{ $fromAI(\"event_description\", \"The event description\", \"string\") }}",
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+          "summary": "={{ $fromAI(\"event_title\", \"The event title\", \"string\") }}"
+        }
+      },
+      "id": "e5574ad5-9718-4a47-acf8-7d0a4af194b5",
+      "name": "UpdateEvent",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        272,
+        224
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CT8OPAO29NgKiy8H",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "subrata.aiworld@gmail.com",
+          "mode": "list",
+          "cachedResultName": "subrata.aiworld@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "id": "a540d03d-4733-4771-8207-995f95a5ee3e",
+      "name": "DeleteEvent",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        448,
+        224
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CT8OPAO29NgKiy8H",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Calendar1": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeleteEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3a87ccf5-1737-4353-ac61-bbb78ab9374d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f8945e1676b80d29b396e19cfc031fd1282160af6898890d6372b6d47bd9e91f"
+  },
+  "id": "2wmKsHHd8vnzARq7",
+  "tags": []
+}
